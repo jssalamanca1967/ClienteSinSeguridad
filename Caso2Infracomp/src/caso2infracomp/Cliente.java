@@ -471,28 +471,26 @@ public class Cliente extends Thread {
 
         imprimirConsola("S: " + recibido);
 
-        String num1 = descifrarAsimetrico(recibido);
+        int asdf = recibido.compareTo(numeroPA);
 
-        int asdf = num1.compareTo(numeroPA);
+        imprimirConsola(asdf + " - " + recibido + " - " + numeroPA);
 
-        imprimirConsola(asdf + " - " + num1 + " - " + numeroPA);
-
-        if (!num1.equals(numeroPA)) {
+        if (!recibido.equals(numeroPA)) {
             System.err.println("Exception: El servidor envio un numero inválido"
-                    + "\nRespuesta: " + num1);
+                    + "\nRespuesta: " + recibido);
             escribirEnArchivo("Fallo", "El servidor no respondio como se esperaba");
 
 //            generadorArchivo.escribirLinea("Fallo", "El servidor envio un numero invalido");
             
         }
 
-        imprimirConsola(num1 + " - " + numeroPA);
+        imprimirConsola(recibido + " - " + numeroPA);
 
         aEnviar = RTA + ":" + OK;
 
         enviarMensaje(aEnviar);
 
-        aEnviar = encriptarAsimetrico(numeroServidor);
+        aEnviar = numeroServidor;
 
         enviarMensaje(aEnviar);
 
@@ -528,47 +526,47 @@ public class Cliente extends Thread {
 
     public void etapa4() throws Exception {
 
-        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+//        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+//
+//        llaveSimetrica = keyGen.generateKey();
+//        Mac macAlgo = Mac.getInstance(algoritmoHMAC);
+//
+//        macAlgo.init(llaveSimetrica);
+//
+//        // Se cifra con la llave publica del servidor
+//        Cipher cifradorPublico = Cipher.getInstance(RSA);
+//        cifradorPublico.init(Cipher.ENCRYPT_MODE, llavePublicaServidor);
+//
+//        byte[] data = macAlgo.doFinal(llaveSimetrica.getEncoded());
+//
+//        byte[] primerCifrado = cifradorPublico.doFinal(data);
+//
+//        Cipher cifradoPrivado = Cipher.getInstance(RSA);
+//        cifradoPrivado.init(Cipher.ENCRYPT_MODE, parLlaves.getPrivate());
+//
+//        // Cifrado por bloques
+//        aEnviar = "";
+//
+//        int numero = primerCifrado.length / 117;
+//
+//        for (int i = 0; i < numero; i++) {
+//            byte[] nuevoCifrado = new byte[117];
+//            for (int j = i * 117; j < 117 + i * (primerCifrado.length - 117); j++) {
+//
+//                int m = 0;
+//                nuevoCifrado[m] = primerCifrado[j];
+//
+//                m++;
+//
+//            }
+//
+//            byte[] segundoCifrado = cifradoPrivado.doFinal(nuevoCifrado);
+//
+//            aEnviar += Transformacion.transformar(segundoCifrado);
+//
+//        }
 
-        llaveSimetrica = keyGen.generateKey();
-        Mac macAlgo = Mac.getInstance(algoritmoHMAC);
-
-        macAlgo.init(llaveSimetrica);
-
-        // Se cifra con la llave publica del servidor
-        Cipher cifradorPublico = Cipher.getInstance(RSA);
-        cifradorPublico.init(Cipher.ENCRYPT_MODE, llavePublicaServidor);
-
-        byte[] data = macAlgo.doFinal(llaveSimetrica.getEncoded());
-
-        byte[] primerCifrado = cifradorPublico.doFinal(data);
-
-        Cipher cifradoPrivado = Cipher.getInstance(RSA);
-        cifradoPrivado.init(Cipher.ENCRYPT_MODE, parLlaves.getPrivate());
-
-        // Cifrado por bloques
-        aEnviar = "";
-
-        int numero = primerCifrado.length / 117;
-
-        for (int i = 0; i < numero; i++) {
-            byte[] nuevoCifrado = new byte[117];
-            for (int j = i * 117; j < 117 + i * (primerCifrado.length - 117); j++) {
-
-                int m = 0;
-                nuevoCifrado[m] = primerCifrado[j];
-
-                m++;
-
-            }
-
-            byte[] segundoCifrado = cifradoPrivado.doFinal(nuevoCifrado);
-
-            aEnviar += Transformacion.transformar(segundoCifrado);
-
-        }
-
-        enviarMensaje(aEnviar);
+        enviarMensaje("INIT");
     }
 
     public void run() {
