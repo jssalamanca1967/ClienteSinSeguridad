@@ -1,0 +1,22 @@
+Variables obligatorias
+
+1. Tiempo de respuesta autenticación (Intercambio certificados -> numeros aleatorios cifrados)
+2. Tiempo de respuesta solicitud de actualización (INIT -> RTA:OK|ERROR)
+3. # transacciones perdidas por carga
+
+Variables alternas
+
+1. Carga actual
+2. Tiempo inicial y final de la transacción (Tiempo total de la transaccion = Tf - Ti)
+-- 3. % Uso CPU
+
+Gráficas (9 en total)
+
+1. # Threads ocupados / Tiempo autenticacion
+2. # Threads / # transacciones perdidas
+3. # Threads / % Uso CPU
+4. 2 threads: Tiempo Autenticación vs % uso CPU --- Por carga (x 3)
+5. 16 Threads: Tiempo Autenticación vs % uso CPU --- Por carga (x 3)
+
+Archivos:
+
